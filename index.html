@@ -48,22 +48,22 @@
   <canvas id="petals-canvas"></canvas>
 
   <!-- =========================================================================
-       1. WELCOME SCREEN (CINEMATIC OPENING)
+       1. WELCOME SCREEN (CINEMATIC OPENING & NAME SETUP)
        ========================================================================= -->
-  <section id="welcome-screen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-br from-[#FFF5F8] via-[#FDF2F8] to-[#F5EEF8] px-4 text-center transition-all duration-1000">
+  <section id="welcome-screen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-br from-[#FFF5F8] via-[#FDF2F8] to-[#F5EEF8] px-4 py-8 text-center transition-all duration-1000 overflow-y-auto">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-pink-200/40 rounded-full blur-3xl animate-pulse"></div>
       <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-amber-200/40 rounded-full blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
     </div>
 
     <!-- Rakhi Thread Connecting Two Glowing Hearts -->
-    <div class="relative w-full max-w-md h-36 flex items-center justify-between px-6 mb-8">
-      <!-- Heart 1 -->
+    <div class="relative w-full max-w-md h-28 sm:h-32 flex items-center justify-between px-6 mb-4">
+      <!-- Heart 1 (Sender) -->
       <div class="relative z-10 flex flex-col items-center">
-        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg shadow-pink-500/40 animate-heartbeat text-white text-2xl">
+        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg shadow-pink-500/40 animate-heartbeat text-white text-2xl">
           💖
         </div>
-        <span class="mt-2 text-xs font-semibold text-rose-800 uppercase tracking-widest your-name-display">Aman</span>
+        <span class="mt-1.5 text-xs font-bold text-rose-800 uppercase tracking-wider your-name-display truncate max-w-[100px]">Aapka Naam</span>
       </div>
 
       <!-- Connecting Rakhi Thread SVG with golden beads & rakhi emblem -->
@@ -79,42 +79,89 @@
           </defs>
         </svg>
         <!-- Golden Center Rakhi Dial -->
-        <div class="absolute w-12 h-12 rounded-full bg-gradient-to-tr from-amber-400 to-amber-200 border-2 border-amber-500 flex items-center justify-center shadow-md animate-float">
-          <div class="w-7 h-7 rounded-full bg-rose-600 border border-amber-300 flex items-center justify-center text-amber-200 text-xs">
+        <div class="absolute w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr from-amber-400 to-amber-200 border-2 border-amber-500 flex items-center justify-center shadow-md animate-float">
+          <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-rose-600 border border-amber-300 flex items-center justify-center text-amber-200 text-xs">
             🌸
           </div>
         </div>
       </div>
 
-      <!-- Heart 2 -->
+      <!-- Heart 2 (Receiver) -->
       <div class="relative z-10 flex flex-col items-center">
-        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center shadow-lg shadow-rose-500/40 animate-heartbeat text-white text-2xl" style="animation-delay: 0.3s;">
+        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center shadow-lg shadow-rose-500/40 animate-heartbeat text-white text-2xl" style="animation-delay: 0.3s;">
           🫶
         </div>
-        <span class="mt-2 text-xs font-semibold text-rose-800 uppercase tracking-widest friend-name-display">Riya</span>
+        <span class="mt-1.5 text-xs font-bold text-rose-800 uppercase tracking-wider friend-name-display truncate max-w-[100px]">Behan ka Naam</span>
       </div>
     </div>
 
     <!-- Cinematic Quotes -->
-    <div class="max-w-2xl px-4 space-y-4">
-      <p id="welcome-text-1" class="font-serif text-xl sm:text-2xl text-slate-600 opacity-0 transition-opacity duration-1000 italic">
+    <div class="max-w-2xl px-4 space-y-2 mb-6">
+      <p id="welcome-text-1" class="font-serif text-lg sm:text-xl text-slate-600 italic">
         “Some relationships are made by blood…”
       </p>
-      <p id="welcome-text-2" class="font-serif text-2xl sm:text-4xl font-bold text-slate-800 opacity-0 transition-opacity duration-1000 bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 bg-clip-text text-transparent">
+      <p id="welcome-text-2" class="font-serif text-xl sm:text-3xl font-bold text-slate-800 bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 bg-clip-text text-transparent">
         “But some beautiful relationships are made by the heart. 💖”
       </p>
     </div>
 
-    <!-- Grand Action Button -->
-    <div class="mt-10 opacity-0 transition-all duration-1000" id="welcome-btn-wrap">
-      <button id="open-surprise-btn" class="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-semibold text-lg shadow-xl shadow-pink-500/30 hover:shadow-2xl hover:shadow-rose-500/50 hover:scale-105 active:scale-95 transition-all duration-300 border border-white/40">
-        <span class="text-2xl animate-bounce">🎁</span>
-        <span>Open Your Raksha Bandhan Surprise</span>
-        <i data-lucide="sparkles" class="w-5 h-5 text-amber-200 group-hover:rotate-45 transition-transform"></i>
-      </button>
-      <p class="mt-3 text-xs text-slate-500 font-medium flex items-center justify-center gap-1">
-        <i data-lucide="volume-2" class="w-3.5 h-3.5 text-pink-500"></i> Click to play soft instrumental melody & enter
-      </p>
+    <!-- Name & Bond Setup Card -->
+    <div class="w-full max-w-md bg-white/85 backdrop-blur-xl p-5 sm:p-6 rounded-3xl border border-pink-200/80 shadow-2xl space-y-4 text-left relative z-20">
+      <div class="text-center pb-1">
+        <span class="text-xs font-bold text-rose-600 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-full border border-rose-200">
+          🌸 Raksha Bandhan Personalizer 🌸
+        </span>
+        <h3 class="font-serif text-base sm:text-lg font-bold text-slate-800 mt-2">Enter Your Names to Create This World</h3>
+      </div>
+
+      <!-- Input 1: Her Name -->
+      <div>
+        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+          Whom is this for? (Behan / Bestie ka Naam) 💖
+        </label>
+        <input type="text" id="setup-friend-name" placeholder="Jaise: Priya, Sneha, Di, Khushi..." class="w-full px-4 py-2.5 rounded-xl border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm font-medium bg-pink-50/40 text-slate-800 placeholder-slate-400" oninput="handleSetupNameChange()" />
+      </div>
+
+      <!-- Input 2: Your Name -->
+      <div>
+        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+          Who is sending this? (Aapka Naam / Bhai) 🤝
+        </label>
+        <input type="text" id="setup-your-name" placeholder="Jaise: Sourabh, Aman, Rahul..." class="w-full px-4 py-2.5 rounded-xl border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm font-medium bg-pink-50/40 text-slate-800 placeholder-slate-400" oninput="handleSetupNameChange()" />
+      </div>
+
+      <!-- Relationship / Bond Type Selector -->
+      <div>
+        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+          Choose Your Relationship Bond ✨
+        </label>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <button type="button" class="role-chip active px-3 py-2 rounded-xl border border-pink-300 bg-pink-500 text-white font-semibold transition-all text-center" data-role="sister-by-heart" onclick="selectRole(this, 'sister-by-heart')">
+            💖 Sister by Heart
+          </button>
+          <button type="button" class="role-chip px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium hover:bg-pink-50 transition-all text-center" data-role="brother-sister" onclick="selectRole(this, 'brother-sister')">
+            👦👧 Bhai & Behan
+          </button>
+          <button type="button" class="role-chip px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium hover:bg-pink-50 transition-all text-center" data-role="sister-sister" onclick="selectRole(this, 'sister-sister')">
+            👭 Behan & Behan
+          </button>
+          <button type="button" class="role-chip px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium hover:bg-pink-50 transition-all text-center" data-role="best-friends" onclick="selectRole(this, 'best-friends')">
+            🤝 Best Friends Forever
+          </button>
+        </div>
+      </div>
+
+      <!-- Enter Surprise Button -->
+      <div class="pt-2">
+        <button id="open-surprise-btn" class="w-full group relative flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-bold text-base shadow-xl shadow-pink-500/30 hover:shadow-2xl hover:scale-[1.02] active:scale-95 transition-all">
+          <span class="text-xl animate-bounce">🎁</span>
+          <span>Open Your Raksha Bandhan Surprise</span>
+          <i data-lucide="sparkles" class="w-4 h-4 text-amber-200 group-hover:rotate-45 transition-transform"></i>
+        </button>
+        <p class="mt-2 text-[11px] text-slate-500 text-center font-medium flex items-center justify-center gap-1">
+          <i data-lucide="volume-2" class="w-3.5 h-3.5 text-pink-500"></i> Plays soft soothing background raga melody
+        </p>
+      </div>
     </div>
   </section>
 
@@ -122,14 +169,14 @@
        FLOATING NAVIGATION & AUDIO CONTROLLER
        ========================================================================= -->
   <header class="fixed top-4 inset-x-4 max-w-6xl mx-auto z-50 transition-all duration-300">
-    <nav class="glass-nav rounded-2xl px-4 py-3 flex items-center justify-between shadow-lg">
+    <nav class="glass-nav rounded-2xl px-3 sm:px-4 py-3 flex items-center justify-between shadow-lg">
       <a href="#hero-section" class="flex items-center gap-2 font-serif text-base sm:text-lg font-bold text-slate-800">
         <span class="w-8 h-8 rounded-full bg-gradient-to-tr from-pink-500 to-rose-500 flex items-center justify-center text-white text-sm shadow-md">✨</span>
         <span class="hidden sm:inline bg-gradient-to-r from-pink-600 to-rose-700 bg-clip-text text-transparent">A Bond Beyond Words</span>
       </a>
 
       <!-- Quick Nav Links -->
-      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+      <div class="hidden md:flex items-center gap-5 text-sm font-medium text-slate-600">
         <a href="#why-special" class="hover:text-pink-600 transition-colors">Why You're Special</a>
         <a href="#memories-section" class="hover:text-pink-600 transition-colors">Memories</a>
         <a href="#letter-section" class="hover:text-pink-600 transition-colors">Letter</a>
@@ -137,6 +184,34 @@
         <a href="#gifts-section" class="hover:text-pink-600 transition-colors">Gifts 🎁</a>
         <a href="#surprise-section" class="hover:text-pink-600 transition-colors">Surprise ✨</a>
       </div>
+
+      <!-- Action Utilities -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Share on WhatsApp / Copy Link Button -->
+        <button id="share-link-btn" onclick="openShareModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-xs font-semibold transition-all shadow-sm border border-emerald-300" title="Share Personalized Link on WhatsApp">
+          <i data-lucide="share-2" class="w-3.5 h-3.5 text-emerald-700"></i>
+          <span class="hidden sm:inline">Share</span>
+        </button>
+
+        <!-- Live Music Equalizer Button -->
+        <button id="music-toggle-btn" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-800 text-xs font-medium transition-all shadow-sm" title="Toggle Soft Ambient Music">
+          <div id="audio-bars" class="flex items-end gap-0.5 h-4 w-4">
+            <span class="w-1 bg-pink-600 rounded-full h-1 bar-1"></span>
+            <span class="w-1 bg-pink-600 rounded-full h-1 bar-2"></span>
+            <span class="w-1 bg-pink-600 rounded-full h-1 bar-3"></span>
+            <span class="w-1 bg-pink-600 rounded-full h-1 bar-4"></span>
+          </div>
+          <span id="music-btn-text" class="hidden sm:inline">Music: On</span>
+        </button>
+
+        <!-- Personalize Name Button -->
+        <button id="open-personalizer-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-semibold transition-all shadow-sm border border-amber-300" title="Personalize Names & Letter">
+          <i data-lucide="edit-3" class="w-3.5 h-3.5 text-amber-700"></i>
+          <span>Edit Names</span>
+        </button>
+      </div>
+    </nav>
+  </header>
 
       <!-- Action Utilities -->
       <div class="flex items-center gap-2 sm:gap-3">
@@ -1145,16 +1220,28 @@
       <div class="space-y-4 text-sm">
         <div>
           <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
-            Friend's Name (Her Name)
+            Whom is this for? (Behan / Bestie ka Naam) 💖
           </label>
-          <input type="text" id="input-friend-name" value="Riya" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 font-medium" placeholder="Enter her name..." />
+          <input type="text" id="input-friend-name" value="" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 font-medium" placeholder="Enter her name..." />
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
-            Your Name
+            Your Name (Aapka Naam / Bhai) 🤝
           </label>
-          <input type="text" id="input-your-name" value="Aman" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 font-medium" placeholder="Enter your name..." />
+          <input type="text" id="input-your-name" value="" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 font-medium" placeholder="Enter your name..." />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+            Relationship Bond ✨
+          </label>
+          <select id="input-relation-role" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 font-medium bg-white text-slate-800 text-sm">
+            <option value="sister-by-heart">💖 Sister by Heart & Best Friend</option>
+            <option value="brother-sister">👦👧 Bhai & Behan (Brother & Sister)</option>
+            <option value="sister-sister">👭 Behan & Behan (Sister & Sister)</option>
+            <option value="best-friends">🤝 Best Friends Forever</option>
+          </select>
         </div>
 
         <p class="text-xs text-slate-400 leading-relaxed">
@@ -1167,9 +1254,48 @@
       <button onclick="savePersonalization()" class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all">
         Save & Apply Everywhere ✨
       </button>
-      <button onclick="resetPersonalization()" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-medium transition-colors">
-        Reset to Defaults
+      <button onclick="openShareModal()" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all">
+        <i data-lucide="share-2" class="w-4 h-4"></i> Share Personalized Link
       </button>
+    </div>
+  </div>
+
+  <!-- 4. SHARE ON WHATSAPP & COPY LINK MODAL -->
+  <div id="share-modal" class="fixed inset-0 z-[10000] lightbox-modal hidden items-center justify-center p-4">
+    <div class="glass-card-gold max-w-lg w-full p-6 sm:p-8 rounded-3xl relative text-center border-2 border-emerald-300 shadow-2xl space-y-5">
+      <button onclick="closeShareModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold">
+        ✕
+      </button>
+
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/30">
+        📲
+      </div>
+
+      <div class="space-y-2">
+        <h3 class="font-serif-header text-2xl font-bold text-slate-800">
+          Share With Your Sibling 🌸
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Send this custom link directly to <span class="font-bold text-emerald-700 friend-name-display">her</span> on WhatsApp. When opened, it will greet her with her name and your personalized bond!
+        </p>
+      </div>
+
+      <div class="p-3 bg-white rounded-xl border border-emerald-200 flex items-center gap-2 text-left">
+        <input type="text" id="share-link-input" readonly class="w-full text-xs font-mono text-slate-600 bg-transparent focus:outline-none truncate" />
+        <button onclick="copyShareLink()" class="shrink-0 px-3 py-1.5 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs font-bold transition-colors">
+          Copy
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+        <button onclick="shareViaWhatsApp()" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all">
+          <span>💬 Share on WhatsApp</span>
+        </button>
+        <button onclick="copyShareLink()" class="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all">
+          <i data-lucide="link" class="w-4 h-4"></i>
+          <span>Copy Link</span>
+        </button>
+      </div>
     </div>
   </div>
 

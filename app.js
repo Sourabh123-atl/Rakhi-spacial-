@@ -1,16 +1,23 @@
 /* ==========================================================================
    A BOND BEYOND WORDS - HAPPY RAKSHA BANDHAN
-   Interactive Audio, Canvas Petals, Envelope 3D, Lightbox, Confetti & Logic
+   Dynamic Personalization, Role-Based Adaptations, Web Audio, & Sharing
    ========================================================================== */
 
 // --- Global State & Configuration ---
+const urlParams = new URLSearchParams(window.location.search);
+const urlFor = urlParams.get('for') || urlParams.get('to') || urlParams.get('name');
+const urlFrom = urlParams.get('from') || urlParams.get('by') || urlParams.get('sender');
+const urlRole = urlParams.get('role') || urlParams.get('bond');
+
 const AppState = {
-  friendName: localStorage.getItem('rakhi_friend_name') || 'Riya',
-  yourName: localStorage.getItem('rakhi_your_name') || 'Aman',
+  friendName: urlFor || localStorage.getItem('rakhi_friend_name') || 'Meri Pyaari Behan',
+  yourName: urlFrom || localStorage.getItem('rakhi_your_name') || 'Tera Bhai',
+  role: urlRole || localStorage.getItem('rakhi_relation_role') || 'sister-by-heart',
   musicPlaying: false,
   audioCtx: null,
   musicTimer: null,
   lightboxIndex: 0,
+  typewriterTimeout: null,
   memories: [
     {
       src: 'assets/images/friends_cafe_laughter.jpg',
@@ -42,7 +49,7 @@ const AppState = {
     },
     {
       src: 'assets/images/hero_friends_bond.jpg',
-      caption: '“Chosen sister for a lifetime ♾️💖”'
+      caption: '“Chosen sibling for a lifetime ♾️💖”'
     }
   ]
 };
@@ -54,7 +61,23 @@ document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
   }
 
-  // Update Initial Names
+  // Pre-fill inputs from URL or localStorage if available
+  const setupFriendInput = document.getElementById('setup-friend-name');
+  const setupYourInput = document.getElementById('setup-your-name');
+  const drawerFriendInput = document.getElementById('input-friend-name');
+  const drawerYourInput = document.getElementById('input-your-name');
+  const drawerRoleSelect = document.getElementById('input-relation-role');
+
+  if (setupFriendInput && urlFor) setupFriendInput.value = urlFor;
+  if (setupYourInput && urlFrom) setupYourInput.value = urlFrom;
+  if (drawerFriendInput) drawerFriendInput.value = AppState.friendName;
+  if (drawerYourInput) drawerYourInput.value = AppState.yourName;
+  if (drawerRoleSelect) drawerRoleSelect.value = AppState.role;
+
+  // Set active role chip in setup
+  highlightRoleChip(AppState.role);
+
+  // Update Initial Names and Role-based texts
   updateDOMNames();
 
   // Initialize Canvas Flower Petals
@@ -63,14 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize Night Sky Stars & Floating Lanterns
   initNightSky();
 
-  // Welcome Screen Sequence
-  initWelcomeSequence();
-
   // Custom Cursor Sparkle Trail
   initCursorTrail();
-
-  // Initialize Typewriter Effect in Hero Section
-  initTypewriter();
 
   // Keyboard navigation for lightbox
   document.addEventListener('keydown', (e) => {
@@ -87,40 +104,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Personalize drawer buttons
   document.getElementById('open-personalizer-btn').addEventListener('click', openPersonalizer);
+
+  // Welcome Screen open button
+  document.getElementById('open-surprise-btn').addEventListener('click', enterSpecialWorld);
 });
 
 // =========================================================================
-// 1. WELCOME SCREEN ANIMATION SEQUENCE
+// 1. ROLE & NAME SETUP HANDLERS
 // =========================================================================
-function initWelcomeSequence() {
-  const text1 = document.getElementById('welcome-text-1');
-  const text2 = document.getElementById('welcome-text-2');
-  const btnWrap = document.getElementById('welcome-btn-wrap');
-  const openBtn = document.getElementById('open-surprise-btn');
+function handleSetupNameChange() {
+  const fName = document.getElementById('setup-friend-name').value.trim();
+  const yName = document.getElementById('setup-your-name').value.trim();
 
-  // Step 1: Text 1 fade in
-  setTimeout(() => {
-    text1.classList.remove('opacity-0');
-    text1.classList.add('opacity-100');
-  }, 1200);
+  AppState.friendName = fName || 'Meri Pyaari Behan';
+  AppState.yourName = yName || 'Tera Bhai';
 
-  // Step 2: Text 2 fade in
-  setTimeout(() => {
-    text2.classList.remove('opacity-0');
-    text2.classList.add('opacity-100');
-  }, 2600);
+  updateDOMNames();
+}
 
-  // Step 3: Button reveal
-  setTimeout(() => {
-    btnWrap.classList.remove('opacity-0');
-    btnWrap.classList.add('opacity-100', 'translate-y-0');
-  }, 3800);
+function selectRole(btn, roleKey) {
+  AppState.role = roleKey;
+  highlightRoleChip(roleKey);
+  const drawerRoleSelect = document.getElementById('input-relation-role');
+  if (drawerRoleSelect) drawerRoleSelect.value = roleKey;
 
-  // Trigger entering main website
-  openBtn.addEventListener('click', enterSpecialWorld);
+  updateDOMNames();
+  playSynthesizedChime(587.33, 'triangle', 0.4);
+}
+
+function highlightRoleChip(roleKey) {
+  document.querySelectorAll('.role-chip').forEach(chip => {
+    if (chip.getAttribute('data-role') === roleKey) {
+      chip.classList.add('bg-pink-500', 'text-white', 'border-pink-500', 'font-semibold');
+      chip.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+    } else {
+      chip.classList.remove('bg-pink-500', 'text-white', 'border-pink-500', 'font-semibold');
+      chip.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+    }
+  });
 }
 
 function enterSpecialWorld() {
+  const fName = document.getElementById('setup-friend-name').value.trim();
+  const yName = document.getElementById('setup-your-name').value.trim();
+
+  if (fName) AppState.friendName = fName;
+  if (yName) AppState.yourName = yName;
+
+  localStorage.setItem('rakhi_friend_name', AppState.friendName);
+  localStorage.setItem('rakhi_your_name', AppState.yourName);
+  localStorage.setItem('rakhi_relation_role', AppState.role);
+
+  updateDOMNames();
+
   const welcomeScreen = document.getElementById('welcome-screen');
   
   // Start ambient audio
@@ -129,8 +165,8 @@ function enterSpecialWorld() {
   // Confetti explosion
   if (window.confetti) {
     confetti({
-      particleCount: 80,
-      spread: 90,
+      particleCount: 90,
+      spread: 100,
       origin: { y: 0.6 },
       colors: ['#f472b6', '#fbbf24', '#e11d48', '#c084fc']
     });
@@ -138,20 +174,81 @@ function enterSpecialWorld() {
 
   // Smooth fade-out of welcome screen
   welcomeScreen.style.opacity = '0';
-  welcomeScreen.style.transform = 'scale(1.05)';
+  welcomeScreen.style.transform = 'scale(1.04)';
   welcomeScreen.style.pointerEvents = 'none';
 
   setTimeout(() => {
     welcomeScreen.style.display = 'none';
-  }, 1000);
+    // Restart typewriter with personalized text
+    initTypewriter();
+  }, 900);
 
-  showToast('Welcome to our special Raksha Bandhan world! 🌸✨');
+  showToast(`Welcome to Raksha Bandhan world for ${AppState.friendName}! 🌸✨`);
 }
 
 // =========================================================================
-// 2. WEB AUDIO API INSTRUMENTAL MUSIC & SOUND SYNTHESIZER
+// 2. DYNAMIC CONTENT ADAPTATION (ROLE-BASED & NAME BINDINGS)
 // =========================================================================
-// Generates a soft, soothing, ethereal Indian acoustic/flute raga ambience
+function updateDOMNames() {
+  // Update all instances of friend name
+  document.querySelectorAll('.friend-name-display').forEach(el => {
+    el.textContent = AppState.friendName;
+  });
+
+  // Update all instances of your name
+  document.querySelectorAll('.your-name-display').forEach(el => {
+    el.textContent = AppState.yourName;
+  });
+
+  // Document Title
+  document.title = `A Bond Beyond Words — Happy Raksha Bandhan, ${AppState.friendName} 💖`;
+
+  // Update share link text
+  updateShareLink();
+}
+
+function getRoleTypewriterMessage() {
+  switch (AppState.role) {
+    case 'brother-sister':
+      return `Tum meri sabse pyaari behan ho… chahe hum kitni bhi ladayi karein, tum hamesha meri favourite rahogi. 💝`;
+    case 'sister-sister':
+      return `Tum meri best friend bhi ho aur meri sabse caring sister bhi… thank you for always being my angel. 💝`;
+    case 'best-friends':
+      return `Tum dost ban kar aayi thi aur family se bhi badh kar ban gayi… Happy Rakhi to my soul sister! 💝`;
+    case 'sister-by-heart':
+    default:
+      return `Tum meri sirf best friend nahi ho… tum woh sister ho jo mujhe life ne gift ki hai. 💝`;
+  }
+}
+
+// =========================================================================
+// 3. TYPEWRITER ANIMATION (HERO SECTION)
+// =========================================================================
+function initTypewriter() {
+  const textEl = document.getElementById('typewriter-text');
+  if (!textEl) return;
+
+  if (AppState.typewriterTimeout) {
+    clearTimeout(AppState.typewriterTimeout);
+  }
+
+  const fullText = getRoleTypewriterMessage();
+  let idx = 0;
+
+  function typeChar() {
+    if (idx <= fullText.length) {
+      textEl.textContent = fullText.slice(0, idx) + (idx < fullText.length ? '▌' : '');
+      idx++;
+      AppState.typewriterTimeout = setTimeout(typeChar, 40);
+    }
+  }
+
+  typeChar();
+}
+
+// =========================================================================
+// 4. WEB AUDIO API INSTRUMENTAL MUSIC & SOUND SYNTHESIZER
+// =========================================================================
 function initAudioEngine() {
   if (!AppState.audioCtx) {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -264,27 +361,7 @@ function updateMusicUI(isPlaying) {
 }
 
 // =========================================================================
-// 3. TYPEWRITER ANIMATION (HERO SECTION)
-// =========================================================================
-function initTypewriter() {
-  const textEl = document.getElementById('typewriter-text');
-  const fullText = "Tum meri sirf best friend nahi ho… tum woh sister ho jo mujhe life ne gift ki hai. 💝";
-  let idx = 0;
-
-  function typeChar() {
-    if (idx <= fullText.length) {
-      textEl.textContent = fullText.slice(0, idx) + (idx < fullText.length ? '▌' : '');
-      idx++;
-      setTimeout(typeChar, 45);
-    }
-  }
-
-  // Start after slight delay
-  setTimeout(typeChar, 1000);
-}
-
-// =========================================================================
-// 4. CANVAS FLOWER PETALS (ROSE & MARIGOLD PHYSIC SIMULATION)
+// 5. CANVAS FLOWER PETALS (ROSE & MARIGOLD PHYSIC SIMULATION)
 // =========================================================================
 function initPetalCanvas() {
   const canvas = document.getElementById('petals-canvas');
@@ -358,7 +435,7 @@ function initPetalCanvas() {
 }
 
 // =========================================================================
-// 5. SCRAPBOOK POLAROID LIGHTBOX
+// 6. SCRAPBOOK POLAROID LIGHTBOX
 // =========================================================================
 function openLightbox(index) {
   AppState.lightboxIndex = index;
@@ -406,13 +483,11 @@ function triggerLightboxHeart() {
   showToast('Liked this precious memory! 💖');
 }
 
-// Allow user to upload custom photos into the polaroid gallery
 function handleCustomPhotoUpload(event) {
   const files = event.target.files;
   if (!files || files.length === 0) return;
 
   const galleryGrid = document.getElementById('polaroid-gallery-grid');
-  let addedCount = 0;
 
   Array.from(files).forEach((file, i) => {
     const reader = new FileReader();
@@ -435,7 +510,6 @@ function handleCustomPhotoUpload(event) {
       `;
 
       galleryGrid.prepend(newCard);
-      addedCount++;
     };
     reader.readAsDataURL(file);
   });
@@ -445,7 +519,7 @@ function handleCustomPhotoUpload(event) {
 }
 
 // =========================================================================
-// 6. 3D ENVELOPE & LETTER ANIMATIONS
+// 7. 3D ENVELOPE & LETTER ANIMATIONS
 // =========================================================================
 function toggleEnvelope() {
   const envelope = document.getElementById('rakhi-envelope');
@@ -471,7 +545,7 @@ function copyLetterText() {
 }
 
 // =========================================================================
-// 7. SACRED PROMISES & STAMPS
+// 8. SACRED PROMISES & STAMPS
 // =========================================================================
 function stampPromise(btn) {
   btn.innerHTML = `<span class="text-amber-500 font-bold flex items-center gap-1.5"><i data-lucide="award" class="w-4 h-4"></i> Sealed & Bound ♾️</span>`;
@@ -490,7 +564,7 @@ function stampPromise(btn) {
 }
 
 // =========================================================================
-// 8. UNREVEALED HEART CARDS FLIP
+// 9. UNREVEALED HEART CARDS FLIP
 // =========================================================================
 function toggleHeartCard(container) {
   container.classList.toggle('flipped');
@@ -498,7 +572,7 @@ function toggleHeartCard(container) {
 }
 
 // =========================================================================
-// 9. GRAND SURPRISE CELEBRATION
+// 10. GRAND SURPRISE CELEBRATION
 // =========================================================================
 function triggerGrandSurprise() {
   playSynthesizedChime(523.25, 'sine', 0.3);
@@ -550,7 +624,7 @@ function downloadCelebrationCard() {
 }
 
 // =========================================================================
-// 10. SISTERHOOD VOUCHER CLAIMING
+// 11. SISTERHOOD VOUCHER CLAIMING
 // =========================================================================
 function claimVoucher(btn, voucherName) {
   btn.innerHTML = '✅ Claimed Successfully!';
@@ -570,7 +644,7 @@ function claimVoucher(btn, voucherName) {
 }
 
 // =========================================================================
-// 11. NIGHT SKY GENERATOR & FLOATING LANTERNS
+// 12. NIGHT SKY GENERATOR & FLOATING LANTERNS
 // =========================================================================
 function initNightSky() {
   const starsContainer = document.getElementById('stars-container');
@@ -607,14 +681,13 @@ function initNightSky() {
 }
 
 // =========================================================================
-// 12. VIRTUAL HUG INTERACTION
+// 13. VIRTUAL HUG INTERACTION
 // =========================================================================
 function sendVirtualHug() {
   playSynthesizedChime(587.33, 'sine', 0.4);
   setTimeout(() => playSynthesizedChime(880, 'sine', 0.9), 200);
 
   // Spawn floating rising hearts
-  const colors = ['#f472b6', '#e11d48', '#fbbf24', '#c084fc', '#ffffff'];
   for (let i = 0; i < 35; i++) {
     const heart = document.createElement('div');
     heart.textContent = ['💖', '🫶', '🤗', '🌸', '✨'][Math.floor(Math.random() * 5)];
@@ -641,7 +714,7 @@ function sendVirtualHug() {
 }
 
 // =========================================================================
-// 13. CARD MICRO INTERACTIONS & CURSOR SPARKLES
+// 14. CARD MICRO INTERACTIONS & CURSOR SPARKLES
 // =========================================================================
 function triggerCardHeart(btn) {
   const countEl = btn.querySelector('.heart-count');
@@ -675,12 +748,13 @@ function initCursorTrail() {
 }
 
 // =========================================================================
-// 14. PERSONALIZATION DRAWER & LOCALSTORAGE
+// 15. PERSONALIZATION DRAWER & SHARE MODAL
 // =========================================================================
 function openPersonalizer() {
   const drawer = document.getElementById('personalizer-drawer');
-  document.getElementById('input-friend-name').value = AppState.friendName;
-  document.getElementById('input-your-name').value = AppState.yourName;
+  document.getElementById('input-friend-name').value = AppState.friendName !== 'Meri Pyaari Behan' ? AppState.friendName : '';
+  document.getElementById('input-your-name').value = AppState.yourName !== 'Tera Bhai' ? AppState.yourName : '';
+  document.getElementById('input-relation-role').value = AppState.role;
   drawer.classList.remove('translate-x-full');
 }
 
@@ -692,45 +766,70 @@ function closePersonalizer() {
 function savePersonalization() {
   const fName = document.getElementById('input-friend-name').value.trim();
   const yName = document.getElementById('input-your-name').value.trim();
+  const rRole = document.getElementById('input-relation-role').value;
 
   if (fName) AppState.friendName = fName;
   if (yName) AppState.yourName = yName;
+  if (rRole) AppState.role = rRole;
 
   localStorage.setItem('rakhi_friend_name', AppState.friendName);
   localStorage.setItem('rakhi_your_name', AppState.yourName);
+  localStorage.setItem('rakhi_relation_role', AppState.role);
 
   updateDOMNames();
+  initTypewriter();
   closePersonalizer();
   playSynthesizedChime(880, 'sine', 0.6);
   showToast(`Personalized for ${AppState.friendName} & ${AppState.yourName}! ✨`);
 }
 
-function resetPersonalization() {
-  AppState.friendName = 'Riya';
-  AppState.yourName = 'Aman';
-  localStorage.removeItem('rakhi_friend_name');
-  localStorage.removeItem('rakhi_your_name');
-
-  document.getElementById('input-friend-name').value = 'Riya';
-  document.getElementById('input-your-name').value = 'Aman';
-
-  updateDOMNames();
-  closePersonalizer();
-  showToast('Reset to default names.');
+function generatePersonalizedURL() {
+  const baseUrl = window.location.origin + window.location.pathname;
+  const f = encodeURIComponent(AppState.friendName);
+  const y = encodeURIComponent(AppState.yourName);
+  const r = encodeURIComponent(AppState.role);
+  return `${baseUrl}?for=${f}&from=${y}&role=${r}`;
 }
 
-function updateDOMNames() {
-  document.querySelectorAll('.friend-name-display').forEach(el => {
-    el.textContent = AppState.friendName;
+function updateShareLink() {
+  const input = document.getElementById('share-link-input');
+  if (input) {
+    input.value = generatePersonalizedURL();
+  }
+}
+
+function openShareModal() {
+  updateShareLink();
+  const modal = document.getElementById('share-modal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeShareModal() {
+  const modal = document.getElementById('share-modal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+function copyShareLink() {
+  const shareUrl = generatePersonalizedURL();
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    playSynthesizedChime(880, 'sine', 0.5);
+    showToast('Personalized Link Copied to Clipboard! 📋✨');
+  }).catch(() => {
+    showToast('Link ready in the input box.');
   });
-  document.querySelectorAll('.your-name-display').forEach(el => {
-    el.textContent = AppState.yourName;
-  });
-  document.title = `A Bond Beyond Words — Happy Raksha Bandhan, ${AppState.friendName} 💖`;
+}
+
+function shareViaWhatsApp() {
+  const shareUrl = generatePersonalizedURL();
+  const message = `🌸 Happy Raksha Bandhan, ${AppState.friendName}! 💖\n\nMaine tumhare liye ek special Raksha Bandhan website banayi hai. Yahan click karke apna surprise dekho:\n${shareUrl}`;
+  const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+  window.open(whatsappUrl, '_blank');
 }
 
 // =========================================================================
-// 15. TOAST NOTIFICATIONS
+// 16. TOAST NOTIFICATIONS
 // =========================================================================
 function showToast(message) {
   const container = document.getElementById('toast-container');
