@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Bond Beyond Words — Happy Raksha Bandhan 💖</title>
+  <meta name="description" content="A beautiful, emotional celebration website dedicated to my best friend and sister by heart on Raksha Bandhan." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandPink: '#f472b6',
+            brandDeepPink: '#e11d48',
+            brandLavender: '#f3e8ff',
+            brandDeepLavender: '#9333ea',
+            brandGold: '#f59e0b',
+            brandGoldLight: '#fef3c7',
+            brandCream: '#fffdfa'
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Poppins', 'sans-serif'],
+            script: ['Great Vibes', 'cursive'],
+            hand: ['Caveat', 'cursive'],
+            cinzel: ['Cinzel Decorative', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-[#FFF5F8] text-slate-800 antialiased selection:bg-pink-300 selection:text-pink-900">
+
+  <!-- Floating Flower Petals Canvas -->
+  <canvas id="petals-canvas"></canvas>
+
+  <!-- =========================================================================
+       1. WELCOME SCREEN (CINEMATIC OPENING)
+       ========================================================================= -->
+  <section id="welcome-screen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-br from-[#FFF5F8] via-[#FDF2F8] to-[#F5EEF8] px-4 text-center transition-all duration-1000">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-pink-200/40 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-amber-200/40 rounded-full blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+    </div>
+
+    <!-- Rakhi Thread Connecting Two Glowing Hearts -->
+    <div class="relative w-full max-w-md h-36 flex items-center justify-between px-6 mb-8">
+      <!-- Heart 1 -->
+      <div class="relative z-10 flex flex-col items-center">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg shadow-pink-500/40 animate-heartbeat text-white text-2xl">
+          💖
+        </div>
+        <span class="mt-2 text-xs font-semibold text-rose-800 uppercase tracking-widest your-name-display">Aman</span>
+      </div>
+
+      <!-- Connecting Rakhi Thread SVG with golden beads & rakhi emblem -->
+      <div class="absolute inset-x-12 top-1/2 -translate-y-1/2 h-16 flex items-center justify-center pointer-events-none">
+        <svg class="w-full h-12" viewBox="0 0 300 40" fill="none">
+          <path d="M 10 20 Q 75 -5, 150 20 T 290 20" stroke="url(#rakhiGradient)" stroke-width="4" stroke-linecap="round" class="rakhi-thread-path" />
+          <defs>
+            <linearGradient id="rakhiGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ec4899" />
+              <stop offset="50%" stop-color="#fbbf24" />
+              <stop offset="100%" stop-color="#e11d48" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <!-- Golden Center Rakhi Dial -->
+        <div class="absolute w-12 h-12 rounded-full bg-gradient-to-tr from-amber-400 to-amber-200 border-2 border-amber-500 flex items-center justify-center shadow-md animate-float">
+          <div class="w-7 h-7 rounded-full bg-rose-600 border border-amber-300 flex items-center justify-center text-amber-200 text-xs">
+            🌸
+          </div>
+        </div>
+      </div>
+
+      <!-- Heart 2 -->
+      <div class="relative z-10 flex flex-col items-center">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center shadow-lg shadow-rose-500/40 animate-heartbeat text-white text-2xl" style="animation-delay: 0.3s;">
+          🫶
+        </div>
+        <span class="mt-2 text-xs font-semibold text-rose-800 uppercase tracking-widest friend-name-display">Riya</span>
+      </div>
+    </div>
+
+    <!-- Cinematic Quotes -->
+    <div class="max-w-2xl px-4 space-y-4">
+      <p id="welcome-text-1" class="font-serif text-xl sm:text-2xl text-slate-600 opacity-0 transition-opacity duration-1000 italic">
+        “Some relationships are made by blood…”
+      </p>
+      <p id="welcome-text-2" class="font-serif text-2xl sm:text-4xl font-bold text-slate-800 opacity-0 transition-opacity duration-1000 bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 bg-clip-text text-transparent">
+        “But some beautiful relationships are made by the heart. 💖”
+      </p>
+    </div>
+
+    <!-- Grand Action Button -->
+    <div class="mt-10 opacity-0 transition-all duration-1000" id="welcome-btn-wrap">
+      <button id="open-surprise-btn" class="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-semibold text-lg shadow-xl shadow-pink-500/30 hover:shadow-2xl hover:shadow-rose-500/50 hover:scale-105 active:scale-95 transition-all duration-300 border border-white/40">
+        <span class="text-2xl animate-bounce">🎁</span>
+        <span>Open Your Raksha Bandhan Surprise</span>
+        <i data-lucide="sparkles" class="w-5 h-5 text-amber-200 group-hover:rotate-45 transition-transform"></i>
+      </button>
+      <p class="mt-3 text-xs text-slate-500 font-medium flex items-center justify-center gap-1">
+        <i data-lucide="volume-2" class="w-3.5 h-3.5 text-pink-500"></i> Click to play soft instrumental melody & enter
+      </p>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       FLOATING NAVIGATION & AUDIO CONTROLLER
+       ========================================================================= -->
+  <header class="fixed top-4 inset-x-4 max-w-6xl mx-auto z-50 transition-all duration-300">
+    <nav class="glass-nav rounded-2xl px-4 py-3 flex items-center justify-between shadow-lg">
+      <a href="#hero-section" class="flex items-center gap-2 font-serif text-base sm:text-lg font-bold text-slate-800">
+        <span class="w-8 h-8 rounded-full bg-gradient-to-tr from-pink-500 to-rose-500 flex items-center justify-center text-white text-sm shadow-md">✨</span>
+        <span class="hidden sm:inline bg-gradient-to-r from-pink-600 to-rose-700 bg-clip-text text-transparent">A Bond Beyond Words</span>
+      </a>
+
+      <!-- Quick Nav Links -->
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <a href="#why-special" class="hover:text-pink-600 transition-colors">Why You're Special</a>
+        <a href="#memories-section" class="hover:text-pink-600 transition-colors">Memories</a>
+        <a href="#letter-section" class="hover:text-pink-600 transition-colors">Letter</a>
+        <a href="#promises-section" class="hover:text-pink-600 transition-colors">Promises</a>
+        <a href="#gifts-section" class="hover:text-pink-600 transition-colors">Gifts 🎁</a>
+        <a href="#surprise-section" class="hover:text-pink-600 transition-colors">Surprise ✨</a>
+      </div>
+
+      <!-- Action Utilities -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Live Music Equalizer Button -->
+        <button id="music-toggle-btn" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-800 text-xs font-medium transition-all shadow-sm" title="Toggle Soft Ambient Music">
+          <div id="audio-bars" class="flex items-end gap-0.5 h-4 w-4">
+            <span class="w-1 bg-pink-600 rounded-full h-1 bar-1"></span>
+            <span class="w-1 bg-pink-600 rounded-full h-1 bar-2"></span>
+            <span class="w-1 bg-pink-600 rounded-full h-1 bar-3"></span>
+            <span class="w-1 bg-pink-600 rounded-full h-1 bar-4"></span>
+          </div>
+          <span id="music-btn-text" class="hidden sm:inline">Music: On</span>
+        </button>
+
+        <!-- Personalize Name Button -->
+        <button id="open-personalizer-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-semibold transition-all shadow-sm border border-amber-300" title="Personalize Names & Letter">
+          <i data-lucide="edit-3" class="w-3.5 h-3.5 text-amber-700"></i>
+          <span>Customize</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- =========================================================================
+       2. HERO SECTION
+       ========================================================================= -->
+  <section id="hero-section" class="min-h-screen pt-28 pb-16 px-4 flex items-center justify-center relative overflow-hidden">
+    <!-- Decorative Floating Elements -->
+    <div class="absolute top-20 left-10 w-48 h-48 bg-pink-300/30 rounded-full blur-3xl pointer-events-none animate-float-slow"></div>
+    <div class="absolute bottom-10 right-10 w-64 h-64 bg-amber-300/25 rounded-full blur-3xl pointer-events-none animate-float-reverse"></div>
+    
+    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <!-- Left Column: Hero Texts & Typist -->
+      <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+        <!-- Festive Ribbon Pill -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-100 via-rose-100 to-amber-100 border border-pink-300/70 text-rose-800 text-xs sm:text-sm font-semibold shadow-sm">
+          <span>🌸</span>
+          <span>Raksha Bandhan Special Edition</span>
+          <span>•</span>
+          <span class="text-pink-600 font-script text-base">Chosen Sister Forever</span>
+        </div>
+
+        <!-- Main Heading with Friend's Name -->
+        <h1 class="font-serif-header text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-800 leading-tight">
+          Happy Raksha Bandhan, <br class="hidden sm:inline" />
+          <span class="bg-gradient-to-r from-pink-600 via-rose-600 to-amber-600 bg-clip-text text-transparent friend-name-display">
+            Riya
+          </span> 🫶
+        </h1>
+
+        <!-- Subheading -->
+        <p class="font-serif text-lg sm:text-xl text-slate-600 italic">
+          “Best Friend by Chance, Sister by Heart, Family Forever.”
+        </p>
+
+        <!-- Animated Typing Card -->
+        <div class="glass-card-gold p-5 rounded-2xl relative overflow-hidden border border-amber-200/80">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl mt-0.5">💌</span>
+            <div class="space-y-1">
+              <p class="text-xs uppercase tracking-wider font-semibold text-amber-800">Heartfelt Confession</p>
+              <p id="typewriter-text" class="text-base sm:text-lg font-medium text-slate-800 min-h-[56px] leading-relaxed">
+                <!-- Typewriter text inserted via JS -->
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action CTAs -->
+        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+          <a href="#letter-section" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-medium shadow-lg shadow-pink-500/25 hover:shadow-xl hover:scale-105 active:scale-95 transition-all">
+            <i data-lucide="mail-heart" class="w-5 h-5 text-pink-100"></i>
+            <span>Read My Message 💌</span>
+          </a>
+          <a href="#memories-section" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/90 hover:bg-white text-slate-700 font-medium shadow-md hover:shadow-lg border border-pink-200 hover:scale-105 active:scale-95 transition-all">
+            <i data-lucide="camera" class="w-5 h-5 text-rose-500"></i>
+            <span>See Our Memories 📸</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Hero Best Photo Polaroid with Golden Glow -->
+      <div class="lg:col-span-5 flex justify-center">
+        <div class="relative w-full max-w-sm">
+          <!-- Ambient Glow Background -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-pink-400 to-amber-300 rounded-3xl blur-2xl opacity-40 animate-pulse"></div>
+
+          <!-- Polaroid Frame -->
+          <div class="polaroid-frame bg-white transform rotate-2 hover:rotate-0 transition-transform">
+            <!-- Washi Tape -->
+            <div class="washi-tape washi-tape-gold"></div>
+            
+            <!-- Photo -->
+            <div class="relative aspect-square w-full rounded overflow-hidden bg-slate-100 group cursor-pointer" onclick="openLightbox(0)">
+              <img id="hero-photo-img" src="assets/images/hero_friends_bond.jpg" alt="Best Friends Raksha Bandhan Bond" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="eager" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                <span class="text-white text-xs font-medium flex items-center gap-1.5">
+                  <i data-lucide="maximize-2" class="w-4 h-4"></i> Click to view in HD
+                </span>
+              </div>
+            </div>
+
+            <!-- Polaroid Handwritten Caption -->
+            <div class="mt-4 text-center">
+              <p class="font-handwriting text-2xl text-slate-800 leading-none">
+                Best Friend & Sister for Life ♾️💖
+              </p>
+              <p class="text-[11px] text-slate-400 uppercase tracking-widest mt-1">
+                Raksha Bandhan Memories • Unbreakable Bond
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       3. WHY YOU ARE SPECIAL (4 ANIMATED GLASS CARDS)
+       ========================================================================= -->
+  <section id="why-special" class="py-20 px-4 max-w-6xl mx-auto relative">
+    <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-100 text-pink-700 text-xs font-semibold uppercase tracking-wider">
+        ✨ From My Heart ✨
+      </div>
+      <h2 class="font-serif-header text-3xl sm:text-4xl font-bold text-slate-800">
+        Why You Are Truly Special
+      </h2>
+      <p class="text-slate-600 text-sm sm:text-base">
+        A few of the million reasons why you mean the world to me and why this sibling bond is sacred.
+      </p>
+    </div>
+
+    <!-- 4 Animated Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      <!-- Card 1: My Biggest Support -->
+      <div class="glass-card p-8 rounded-3xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-white/80">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-pink-400/10 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform"></div>
+        <div class="flex items-center justify-between mb-6">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-pink-500 to-rose-500 flex items-center justify-center text-white text-2xl shadow-md shadow-pink-500/30">
+            🤝
+          </div>
+          <span class="text-xs font-semibold text-rose-400 uppercase tracking-wider">Reason #01</span>
+        </div>
+        <h3 class="font-serif text-2xl font-bold text-slate-800 mb-3 group-hover:text-pink-600 transition-colors">
+          My Biggest Support
+        </h3>
+        <p class="text-slate-600 text-base leading-relaxed">
+          “You always support me, even when I stop believing in myself.”
+        </p>
+        <div class="mt-6 pt-4 border-t border-pink-100 flex items-center justify-between text-xs text-slate-400">
+          <span class="flex items-center gap-1 text-pink-600 font-medium">
+            <i data-lucide="shield-check" class="w-4 h-4"></i> Constant Pillar of Strength
+          </span>
+          <button class="love-reaction-btn flex items-center gap-1 hover:text-rose-500 transition-colors" onclick="triggerCardHeart(this)">
+            <span>💖</span> <span class="heart-count">108</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2: My Happiness -->
+      <div class="glass-card p-8 rounded-3xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-white/80">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-400/10 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform"></div>
+        <div class="flex items-center justify-between mb-6">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400 to-amber-500 flex items-center justify-center text-white text-2xl shadow-md shadow-amber-500/30">
+            😊
+          </div>
+          <span class="text-xs font-semibold text-amber-500 uppercase tracking-wider">Reason #02</span>
+        </div>
+        <h3 class="font-serif text-2xl font-bold text-slate-800 mb-3 group-hover:text-amber-600 transition-colors">
+          My Happiness
+        </h3>
+        <p class="text-slate-600 text-base leading-relaxed">
+          “You can turn even my most difficult day into a beautiful memory.”
+        </p>
+        <div class="mt-6 pt-4 border-t border-amber-100 flex items-center justify-between text-xs text-slate-400">
+          <span class="flex items-center gap-1 text-amber-600 font-medium">
+            <i data-lucide="sun" class="w-4 h-4"></i> Instant Sunshine & Smiles
+          </span>
+          <button class="love-reaction-btn flex items-center gap-1 hover:text-amber-500 transition-colors" onclick="triggerCardHeart(this)">
+            <span>✨</span> <span class="heart-count">99</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3: My Secret Keeper -->
+      <div class="glass-card p-8 rounded-3xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-white/80">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-purple-400/10 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform"></div>
+        <div class="flex items-center justify-between mb-6">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-600 flex items-center justify-center text-white text-2xl shadow-md shadow-purple-500/30">
+            🔐
+          </div>
+          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Reason #03</span>
+        </div>
+        <h3 class="font-serif text-2xl font-bold text-slate-800 mb-3 group-hover:text-purple-600 transition-colors">
+          My Secret Keeper
+        </h3>
+        <p class="text-slate-600 text-base leading-relaxed">
+          “With you, I can share everything without any fear of being judged.”
+        </p>
+        <div class="mt-6 pt-4 border-t border-purple-100 flex items-center justify-between text-xs text-slate-400">
+          <span class="flex items-center gap-1 text-purple-600 font-medium">
+            <i data-lucide="lock" class="w-4 h-4"></i> 100% Safe Haven & Trust
+          </span>
+          <button class="love-reaction-btn flex items-center gap-1 hover:text-purple-500 transition-colors" onclick="triggerCardHeart(this)">
+            <span>💜</span> <span class="heart-count">124</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 4: My Sister by Heart -->
+      <div class="glass-card p-8 rounded-3xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-white/80">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-rose-400/10 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform"></div>
+        <div class="flex items-center justify-between mb-6">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-rose-500 to-pink-600 flex items-center justify-center text-white text-2xl shadow-md shadow-rose-500/30">
+            💖
+          </div>
+          <span class="text-xs font-semibold text-rose-500 uppercase tracking-wider">Reason #04</span>
+        </div>
+        <h3 class="font-serif text-2xl font-bold text-slate-800 mb-3 group-hover:text-rose-600 transition-colors">
+          My Sister by Heart
+        </h3>
+        <p class="text-slate-600 text-base leading-relaxed">
+          “We may not be connected by blood, but our bond is connected by trust, care, and countless memories.”
+        </p>
+        <div class="mt-6 pt-4 border-t border-rose-100 flex items-center justify-between text-xs text-slate-400">
+          <span class="flex items-center gap-1 text-rose-600 font-medium">
+            <i data-lucide="heart-handshake" class="w-4 h-4"></i> Chosen Family Sibling Bond
+          </span>
+          <button class="love-reaction-btn flex items-center gap-1 hover:text-rose-500 transition-colors" onclick="triggerCardHeart(this)">
+            <span>🥰</span> <span class="heart-count">240</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       4. OUR BEAUTIFUL MEMORIES (INTERACTIVE POLAROID SCRAPBOOK GALLERY)
+       ========================================================================= -->
+  <section id="memories-section" class="py-20 px-4 bg-gradient-to-b from-transparent via-pink-50/60 to-transparent relative">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold uppercase tracking-wider">
+          📸 Scrapbook & Snapshots 📸
+        </div>
+        <h2 class="font-serif-header text-3xl sm:text-4xl font-bold text-slate-800">
+          Our Beautiful Memories
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base">
+          Every picture holds a timeless story, thousands of laughs, and unforgettable moments. Click any photo to enlarge!
+        </p>
+      </div>
+
+      <!-- Polaroid Scrapbook Grid -->
+      <div id="polaroid-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Polaroid 1 -->
+        <div class="polaroid-frame transform -rotate-2 cursor-pointer" onclick="openLightbox(0)">
+          <div class="washi-tape washi-tape-pink"></div>
+          <div class="aspect-square rounded overflow-hidden bg-slate-100">
+            <img src="assets/images/friends_cafe_laughter.jpg" alt="Our friendship started" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <p class="font-handwriting text-xl text-center text-slate-800 mt-4">
+            “The day this beautiful friendship started ✨”
+          </p>
+        </div>
+
+        <!-- Polaroid 2 -->
+        <div class="polaroid-frame transform rotate-2 cursor-pointer" onclick="openLightbox(1)">
+          <div class="washi-tape washi-tape-gold"></div>
+          <div class="aspect-square rounded overflow-hidden bg-slate-100">
+            <img src="assets/images/friends_goofy_selfie.jpg" alt="Unlimited laughter" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <p class="font-handwriting text-xl text-center text-slate-800 mt-4">
+            “Our unlimited laughter 😂”
+          </p>
+        </div>
+
+        <!-- Polaroid 3 -->
+        <div class="polaroid-frame transform -rotate-1 cursor-pointer" onclick="openLightbox(2)">
+          <div class="washi-tape washi-tape-lavender"></div>
+          <div class="aspect-square rounded overflow-hidden bg-slate-100">
+            <img src="assets/images/rakhi_celebration_thali.jpg" alt="One picture thousands of memories" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <p class="font-handwriting text-xl text-center text-slate-800 mt-4">
+            “One picture, thousands of memories 💖”
+          </p>
+        </div>
+
+        <!-- Polaroid 4 -->
+        <div class="polaroid-frame transform rotate-3 cursor-pointer" onclick="openLightbox(3)">
+          <div class="washi-tape washi-tape-pink"></div>
+          <div class="aspect-square rounded overflow-hidden bg-slate-100">
+            <img src="assets/images/friends_sunset_hill.jpg" alt="Thank you for always being there" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <p class="font-handwriting text-xl text-center text-slate-800 mt-4">
+            “Thank you for always being there 🤝”
+          </p>
+        </div>
+
+        <!-- Polaroid 5 -->
+        <div class="polaroid-frame transform 1 cursor-pointer" onclick="openLightbox(4)">
+          <div class="washi-tape washi-tape-gold"></div>
+          <div class="aspect-square rounded overflow-hidden bg-slate-100">
+            <img src="assets/images/friends_gifts_celebrate.jpg" alt="The best moments" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <p class="font-handwriting text-xl text-center text-slate-800 mt-4">
+            “The best moments are always with you 🫶”
+          </p>
+        </div>
+
+        <!-- Polaroid 6 -->
+        <div class="polaroid-frame transform -rotate-2 cursor-pointer" onclick="openLightbox(5)">
+          <div class="washi-tape washi-tape-lavender"></div>
+          <div class="aspect-square rounded overflow-hidden bg-slate-100">
+            <img src="assets/images/friends_childhood_icecream.jpg" alt="More memories are waiting" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <p class="font-handwriting text-xl text-center text-slate-800 mt-4">
+            “More memories are still waiting for us 🌸”
+          </p>
+        </div>
+
+        <!-- Polaroid 7 -->
+        <div class="polaroid-frame transform rotate-2 cursor-pointer" onclick="openLightbox(6)">
+          <div class="washi-tape washi-tape-pink"></div>
+          <div class="aspect-square rounded overflow-hidden bg-slate-100">
+            <img src="assets/images/friends_studying_fun.jpg" alt="Late night chaos and talks" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <p class="font-handwriting text-xl text-center text-slate-800 mt-4">
+            “Endless talks, teasing & sweet chaos ☕”
+          </p>
+        </div>
+
+        <!-- Polaroid 8 -->
+        <div class="polaroid-frame transform -rotate-3 cursor-pointer" onclick="openLightbox(7)">
+          <div class="washi-tape washi-tape-gold"></div>
+          <div class="aspect-square rounded overflow-hidden bg-slate-100">
+            <img src="assets/images/hero_friends_bond.jpg" alt="Chosen sibling forever" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <p class="font-handwriting text-xl text-center text-slate-800 mt-4">
+            “Chosen sister for a lifetime ♾️💖”
+          </p>
+        </div>
+      </div>
+
+      <!-- Replace / Add Custom Photos Option -->
+      <div class="mt-12 text-center">
+        <label class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-slate-700 hover:text-pink-600 border border-pink-200 shadow-sm hover:shadow-md cursor-pointer transition-all text-sm font-medium">
+          <i data-lucide="upload" class="w-4 h-4 text-pink-500"></i>
+          <span>Upload / Replace With Your Real Photos</span>
+          <input type="file" id="custom-photo-uploader" accept="image/*" multiple class="hidden" onchange="handleCustomPhotoUpload(event)" />
+        </label>
+        <p class="text-xs text-slate-400 mt-2">Personalize your memory album anytime directly from your device</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       5. SPECIAL RAKSHA BANDHAN LETTER (3D INTERACTIVE ENVELOPE)
+       ========================================================================= -->
+  <section id="letter-section" class="py-24 px-4 max-w-5xl mx-auto relative">
+    <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-100 text-pink-700 text-xs font-semibold uppercase tracking-wider">
+        💌 Handcrafted With Love 💌
+      </div>
+      <h2 class="font-serif-header text-3xl sm:text-4xl font-bold text-slate-800">
+        Special Raksha Bandhan Letter
+      </h2>
+      <p class="text-slate-600 text-sm sm:text-base">
+        Click on the golden wax seal to unseal the envelope and read the message written from the depth of my heart.
+      </p>
+    </div>
+
+    <!-- 3D Origami Envelope Container -->
+    <div class="envelope-wrapper my-8" id="rakhi-envelope">
+      <div class="envelope-container">
+        <!-- Back flap -->
+        <div class="envelope-back"></div>
+
+        <!-- Letter content sliding out -->
+        <div class="envelope-letter space-y-4">
+          <div class="flex items-center justify-between border-b border-rose-200/60 pb-3">
+            <span class="font-script text-2xl text-rose-700">Raksha Bandhan Sandesh 🌸</span>
+            <span class="text-xs font-mono text-slate-400">Pure Heart • Chosen Bond</span>
+          </div>
+
+          <div class="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed">
+            <p class="font-bold text-rose-800 text-lg">
+              Dear <span class="friend-name-display">Riya</span>,
+            </p>
+
+            <p>
+              Tum meri life ke un special people mein se ho jinke hone se sab kuch thoda easy aur bahut zyada beautiful lagta hai. Jab bhi mujhe support ki zarurat hoti hai, tum hamesha mere saath khadi rehti ho.
+            </p>
+
+            <p>
+              Humara blood relation nahi hai, lekin tumne mujhe hamesha ek sister jaisi care, ek best friend jaisi understanding aur family jaisa comfort diya hai. Tumhare saath main bina kisi hesitation ke apni feelings share kar sakta hoon.
+            </p>
+
+            <p>
+              Is Raksha Bandhan par main sirf itna kehna chahta hoon—thank you for understanding me, supporting me, and never leaving my side. Chahe life humein kahin bhi le jaaye, humari friendship aur yeh special sibling bond hamesha aisa hi rahega.
+            </p>
+
+            <p class="font-semibold text-rose-900 bg-rose-50/80 p-3 rounded-lg border-l-4 border-rose-500">
+              “You are not just my best friend. You are my sister by heart and one of the most precious people in my life.”
+            </p>
+
+            <p>
+              Happy Raksha Bandhan! Hamesha khush rehna aur aise hi meri life ka important part bane rehna. 💖
+            </p>
+
+            <div class="pt-4 border-t border-rose-200/60 text-right space-y-1">
+              <p class="text-xs text-slate-500 font-medium">With endless care & protection,</p>
+              <p class="font-handwriting text-2xl text-rose-700 font-bold your-name-display">Aman</p>
+            </div>
+          </div>
+
+          <!-- Action buttons inside letter -->
+          <div class="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <button onclick="copyLetterText()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-rose-100 hover:bg-rose-200 text-rose-800 transition-colors font-medium">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Letter Text
+            </button>
+            <button onclick="toggleEnvelope()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors font-medium">
+              <i data-lucide="fold-horizontal" class="w-3.5 h-3.5"></i> Fold Letter Back
+            </button>
+          </div>
+        </div>
+
+        <!-- Pocket overlays -->
+        <div class="envelope-pocket"></div>
+        <div class="envelope-bottom-fold"></div>
+
+        <!-- Top Triangular Flap -->
+        <div class="envelope-top-flap"></div>
+
+        <!-- Golden Wax Seal Trigger -->
+        <div class="wax-seal" onclick="toggleEnvelope()" title="Click to Open Letter">
+          <div class="text-center leading-tight">
+            <div class="text-lg">🌸</div>
+            <div class="text-[9px] uppercase font-bold tracking-tighter">OPEN</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. MY PROMISES TO YOU (RAKHI-THREAD CARDS WITH INTERACTIVE STAMPS)
+       ========================================================================= -->
+  <section id="promises-section" class="py-20 px-4 max-w-6xl mx-auto relative">
+    <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold uppercase tracking-wider">
+        🤝 Sibling Vows & Protection 🤝
+      </div>
+      <h2 class="font-serif-header text-3xl sm:text-4xl font-bold text-slate-800">
+        My Promises to You
+      </h2>
+      <p class="text-slate-600 text-sm sm:text-base">
+        Sacred promises tied with the golden thread of Raksha Bandhan that I will honor for a lifetime.
+      </p>
+    </div>
+
+    <!-- 5 Sacred Promises Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Promise 1 -->
+      <div class="rakhi-thread-card p-6 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center font-serif font-bold">1</span>
+            <span class="text-xs font-medium text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">Sacred Vow</span>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-slate-800">
+            Respect & Dignity
+          </h3>
+          <p class="text-slate-600 text-base leading-relaxed font-medium">
+            “Main hamesha tumhari respect karunga.”
+          </p>
+          <p class="text-xs text-slate-400">Your opinions, dreams, and individuality will always be cherished.</p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+          <button class="promise-stamp-btn text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1.5" onclick="stampPromise(this)">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Seal Promise
+          </button>
+          <span class="text-xs text-slate-400 font-mono">#Promise1</span>
+        </div>
+      </div>
+
+      <!-- Promise 2 -->
+      <div class="rakhi-thread-card p-6 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-serif font-bold">2</span>
+            <span class="text-xs font-medium text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">Sacred Vow</span>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-slate-800">
+            Never Leaving Your Side
+          </h3>
+          <p class="text-slate-600 text-base leading-relaxed font-medium">
+            “Tumhari problems mein tumhe kabhi akela nahi chhodunga.”
+          </p>
+          <p class="text-xs text-slate-400">Whatever storms come our way, we face them together.</p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+          <button class="promise-stamp-btn text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1.5" onclick="stampPromise(this)">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Seal Promise
+          </button>
+          <span class="text-xs text-slate-400 font-mono">#Promise2</span>
+        </div>
+      </div>
+
+      <!-- Promise 3 -->
+      <div class="rakhi-thread-card p-6 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-serif font-bold">3</span>
+            <span class="text-xs font-medium text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">Sacred Vow</span>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-slate-800">
+            Prioritizing Your Smile
+          </h3>
+          <p class="text-slate-600 text-base leading-relaxed font-medium">
+            “Tumhari happiness hamesha mere liye important rahegi.”
+          </p>
+          <p class="text-xs text-slate-400">I will do everything I can to keep your smile shining bright.</p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+          <button class="promise-stamp-btn text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1.5" onclick="stampPromise(this)">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Seal Promise
+          </button>
+          <span class="text-xs text-slate-400 font-mono">#Promise3</span>
+        </div>
+      </div>
+
+      <!-- Promise 4 -->
+      <div class="rakhi-thread-card p-6 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-serif font-bold">4</span>
+            <span class="text-xs font-medium text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">Sacred Vow</span>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-slate-800">
+            Unbreakable Bond
+          </h3>
+          <p class="text-slate-600 text-base leading-relaxed font-medium">
+            “Chahe kitni bhi fights ho, humara bond kabhi khatam nahi hoga.”
+          </p>
+          <p class="text-xs text-slate-400">Fights will pass, but this sibling love is eternal.</p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+          <button class="promise-stamp-btn text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1.5" onclick="stampPromise(this)">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Seal Promise
+          </button>
+          <span class="text-xs text-slate-400 font-mono">#Promise4</span>
+        </div>
+      </div>
+
+      <!-- Promise 5 (Featured Card) -->
+      <div class="rakhi-thread-card p-6 md:col-span-2 lg:col-span-2 flex flex-col justify-between bg-gradient-to-r from-rose-50/90 to-amber-50/90">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-10 h-10 rounded-full bg-gradient-to-tr from-pink-500 to-amber-500 text-white flex items-center justify-center font-serif font-bold shadow-md">5</span>
+              <span class="text-xs font-bold text-rose-700 uppercase tracking-widest">Supreme Lifetime Commitment</span>
+            </div>
+            <span class="text-xl animate-bounce">🛡️</span>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-slate-800">
+            Best Friend & Protective Brother For Life
+          </h3>
+          <p class="text-slate-800 text-lg leading-relaxed font-medium">
+            “Main hamesha tumhara best friend aur protective brother bankar rahunga.”
+          </p>
+          <p class="text-sm text-slate-600">
+            Always one call away, anytime, anywhere. No matter what life brings.
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-rose-200 flex items-center justify-between">
+          <button class="promise-stamp-btn text-sm font-bold text-rose-700 hover:text-rose-800 flex items-center gap-2" onclick="stampPromise(this)">
+            <i data-lucide="award" class="w-5 h-5 text-amber-500"></i> Seal Supreme Promise
+          </button>
+          <span class="text-xs text-rose-500 font-semibold">Forever & Always ♾️</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       7. THINGS I NEVER SAY ENOUGH (ANIMATED HEART CARDS)
+       ========================================================================= -->
+  <section id="unspoken-words-section" class="py-20 px-4 bg-gradient-to-b from-transparent via-pink-100/40 to-transparent relative">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold uppercase tracking-wider">
+          💬 Unspoken Feelings 💬
+        </div>
+        <h2 class="font-serif-header text-3xl sm:text-4xl font-bold text-slate-800">
+          Things I Never Say Enough
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base">
+          Little thank-yous that I might not utter every day, but feel in my heart every single moment. Hover or tap each heart card to reveal!
+        </p>
+      </div>
+
+      <!-- 5 Glowing Heart Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+        <!-- Heart 1 -->
+        <div class="heart-card-container cursor-pointer" onclick="toggleHeartCard(this)">
+          <div class="heart-card-inner">
+            <div class="heart-card-front glass-card p-6 flex flex-col items-center justify-center text-center space-y-3 border-2 border-pink-200/80 shadow-md">
+              <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center text-2xl">🤫</div>
+              <p class="font-serif font-bold text-slate-800 text-base">In the Silence</p>
+              <span class="text-xs text-pink-500 font-medium">Tap to Reveal 💖</span>
+            </div>
+            <div class="heart-card-back bg-gradient-to-br from-pink-500 to-rose-600 p-6 flex flex-col items-center justify-center text-center text-white space-y-2 shadow-xl">
+              <span class="text-2xl">✨</span>
+              <p class="font-medium text-sm leading-snug">
+                “Thank you for understanding my silence.”
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heart 2 -->
+        <div class="heart-card-container cursor-pointer" onclick="toggleHeartCard(this)">
+          <div class="heart-card-inner">
+            <div class="heart-card-front glass-card p-6 flex flex-col items-center justify-center text-center space-y-3 border-2 border-amber-200/80 shadow-md">
+              <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-2xl">🤪</div>
+              <p class="font-serif font-bold text-slate-800 text-base">All My Antics</p>
+              <span class="text-xs text-amber-600 font-medium">Tap to Reveal 💖</span>
+            </div>
+            <div class="heart-card-back bg-gradient-to-br from-amber-500 to-rose-500 p-6 flex flex-col items-center justify-center text-center text-white space-y-2 shadow-xl">
+              <span class="text-2xl">😂</span>
+              <p class="font-medium text-sm leading-snug">
+                “Thank you for tolerating my nonsense.”
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heart 3 -->
+        <div class="heart-card-container cursor-pointer" onclick="toggleHeartCard(this)">
+          <div class="heart-card-inner">
+            <div class="heart-card-front glass-card p-6 flex flex-col items-center justify-center text-center space-y-3 border-2 border-purple-200/80 shadow-md">
+              <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-2xl">🌟</div>
+              <p class="font-serif font-bold text-slate-800 text-base">Unwavering Faith</p>
+              <span class="text-xs text-purple-600 font-medium">Tap to Reveal 💖</span>
+            </div>
+            <div class="heart-card-back bg-gradient-to-br from-purple-600 to-pink-600 p-6 flex flex-col items-center justify-center text-center text-white space-y-2 shadow-xl">
+              <span class="text-2xl">💫</span>
+              <p class="font-medium text-sm leading-snug">
+                “Thank you for believing in me.”
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heart 4 -->
+        <div class="heart-card-container cursor-pointer" onclick="toggleHeartCard(this)">
+          <div class="heart-card-inner">
+            <div class="heart-card-front glass-card p-6 flex flex-col items-center justify-center text-center space-y-3 border-2 border-rose-200/80 shadow-md">
+              <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center text-2xl">🌷</div>
+              <p class="font-serif font-bold text-slate-800 text-base">Everyday Magic</p>
+              <span class="text-xs text-rose-600 font-medium">Tap to Reveal 💖</span>
+            </div>
+            <div class="heart-card-back bg-gradient-to-br from-rose-500 to-red-600 p-6 flex flex-col items-center justify-center text-center text-white space-y-2 shadow-xl">
+              <span class="text-2xl">🌸</span>
+              <p class="font-medium text-sm leading-snug">
+                “Thank you for making ordinary days special.”
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heart 5 -->
+        <div class="heart-card-container cursor-pointer" onclick="toggleHeartCard(this)">
+          <div class="heart-card-inner">
+            <div class="heart-card-front glass-card p-6 flex flex-col items-center justify-center text-center space-y-3 border-2 border-pink-300/80 shadow-md">
+              <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center text-2xl">🏡</div>
+              <p class="font-serif font-bold text-slate-800 text-base">Chosen Kin</p>
+              <span class="text-xs text-pink-600 font-medium">Tap to Reveal 💖</span>
+            </div>
+            <div class="heart-card-back bg-gradient-to-br from-pink-600 to-indigo-600 p-6 flex flex-col items-center justify-center text-center text-white space-y-2 shadow-xl">
+              <span class="text-2xl">🫶</span>
+              <p class="font-medium text-sm leading-snug">
+                “Thank you for being my chosen family.”
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       8. SURPRISE CELEBRATION INTERACTION
+       ========================================================================= -->
+  <section id="surprise-section" class="py-24 px-4 max-w-4xl mx-auto text-center relative">
+    <div class="glass-card-gold p-10 sm:p-14 rounded-3xl relative overflow-hidden border-2 border-amber-300/80 shadow-2xl">
+      <!-- Glow background -->
+      <div class="absolute -top-24 -left-24 w-60 h-60 bg-pink-400/30 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-amber-400/30 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 space-y-6">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-amber-400 via-rose-500 to-pink-500 flex items-center justify-center text-white text-3xl shadow-xl shadow-rose-500/30 animate-bounce">
+          🎁
+        </div>
+
+        <h2 class="font-serif-header text-3xl sm:text-4xl font-bold text-slate-800">
+          Ready for a Special Surprise?
+        </h2>
+        <p class="text-slate-600 max-w-lg mx-auto text-base">
+          Tap the golden surprise button to celebrate our unbreakable bond with fireworks, flowers, and your official sisterhood certification!
+        </p>
+
+        <div class="pt-4">
+          <button id="surprise-celebration-btn" onclick="triggerGrandSurprise()" class="shimmer-effect px-10 py-5 rounded-full bg-gradient-to-r from-pink-500 via-rose-600 to-amber-500 text-white font-bold text-lg sm:text-xl shadow-2xl shadow-rose-500/40 hover:scale-105 active:scale-95 transition-all">
+            ✨ Tap for a Special Surprise 🎁
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       9. SPECIAL GIFTS & PRIVILEGE PASS (USER REQUESTED GIFT EXPERIENCE)
+       ========================================================================= -->
+  <section id="gifts-section" class="py-20 px-4 max-w-6xl mx-auto relative">
+    <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold uppercase tracking-wider">
+        🎁 Rakhi Gifts For You 🎁
+      </div>
+      <h2 class="font-serif-header text-3xl sm:text-4xl font-bold text-slate-800">
+        Your Raksha Bandhan Gift Hamper
+      </h2>
+      <p class="text-slate-600 text-sm sm:text-base">
+        Because you deserve the best! Here is your exclusive Lifetime Sibling VIP Privilege Pass and redeemable sisterhood coupon vouchers.
+      </p>
+    </div>
+
+    <!-- Sibling VIP Privilege Card -->
+    <div class="mb-16">
+      <div class="privilege-card max-w-xl mx-auto p-8 sm:p-10 text-white relative shadow-2xl">
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-xl shadow-lg">
+              👑
+            </div>
+            <div>
+              <p class="text-xs uppercase tracking-widest text-amber-300 font-semibold">Exclusive VIP Pass</p>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-amber-100">Lifetime Sibling Privilege</h3>
+            </div>
+          </div>
+          <!-- Holographic Security Stamp -->
+          <div class="w-14 h-14 rounded-full gold-hologram p-0.5 shadow-md flex items-center justify-center">
+            <div class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center text-[10px] font-bold text-amber-300 tracking-tighter text-center">
+              VALID<br/>FOREVER
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4 my-6 text-sm text-amber-100/90">
+          <div class="flex items-center gap-3">
+            <i data-lucide="check" class="w-5 h-5 text-amber-400 shrink-0"></i>
+            <span><strong>24/7 Emotional Support & Late-Night Calling:</strong> Zero hesitation required.</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <i data-lucide="check" class="w-5 h-5 text-amber-400 shrink-0"></i>
+            <span><strong>Permanent Secret Keeper Vault:</strong> Guaranteed 100% confidentiality.</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <i data-lucide="check" class="w-5 h-5 text-amber-400 shrink-0"></i>
+            <span><strong>Unlimited Treats & Coffee on Demand:</strong> Redeemable anytime.</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <i data-lucide="check" class="w-5 h-5 text-amber-400 shrink-0"></i>
+            <span><strong>Lifelong Brotherly Shield & Protection:</strong> Always standing with you.</span>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-amber-400/30 flex items-center justify-between text-xs text-amber-300">
+          <div>
+            <span class="text-slate-400 block text-[10px]">CARD HOLDER</span>
+            <span class="font-bold text-base text-white friend-name-display">Riya</span>
+          </div>
+          <div class="text-right">
+            <span class="text-slate-400 block text-[10px]">ISSUED BY</span>
+            <span class="font-bold text-base text-white your-name-display">Aman</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sisterhood Redeemable Vouchers (4 Vouchers) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Voucher 1 -->
+      <div class="voucher-card p-6 flex flex-col justify-between">
+        <div class="voucher-notch-left"></div>
+        <div class="voucher-notch-right"></div>
+        <div class="space-y-3">
+          <span class="text-2xl">☕</span>
+          <h4 class="font-serif font-bold text-slate-800 text-lg">1 Late-Night Venting Session</h4>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Free pass to talk your heart out without any judgment. I will just listen and support.
+          </p>
+        </div>
+        <div class="mt-6 pt-3 border-t border-dashed border-pink-200">
+          <button onclick="claimVoucher(this, 'Late-Night Venting Session')" class="w-full py-2 rounded-lg bg-pink-100 hover:bg-pink-200 text-pink-800 text-xs font-semibold transition-colors">
+            Claim Coupon ✨
+          </button>
+        </div>
+      </div>
+
+      <!-- Voucher 2 -->
+      <div class="voucher-card p-6 flex flex-col justify-between">
+        <div class="voucher-notch-left"></div>
+        <div class="voucher-notch-right"></div>
+        <div class="space-y-3">
+          <span class="text-2xl">🍦</span>
+          <h4 class="font-serif font-bold text-slate-800 text-lg">Unlimited Ice Cream Treat</h4>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Whenever you feel low or crave sweetness, your favorite ice cream treat is on me!
+          </p>
+        </div>
+        <div class="mt-6 pt-3 border-t border-dashed border-pink-200">
+          <button onclick="claimVoucher(this, 'Unlimited Ice Cream Treat')" class="w-full py-2 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-semibold transition-colors">
+            Claim Coupon ✨
+          </button>
+        </div>
+      </div>
+
+      <!-- Voucher 3 -->
+      <div class="voucher-card p-6 flex flex-col justify-between">
+        <div class="voucher-notch-left"></div>
+        <div class="voucher-notch-right"></div>
+        <div class="space-y-3">
+          <span class="text-2xl">🏆</span>
+          <h4 class="font-serif font-bold text-slate-800 text-lg">“You Win The Argument” Pass</h4>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Redeemable during any silly fight. Present this card and I instantly surrender!
+          </p>
+        </div>
+        <div class="mt-6 pt-3 border-t border-dashed border-pink-200">
+          <button onclick="claimVoucher(this, 'You Win The Argument Pass')" class="w-full py-2 rounded-lg bg-purple-100 hover:bg-purple-200 text-purple-800 text-xs font-semibold transition-colors">
+            Claim Coupon ✨
+          </button>
+        </div>
+      </div>
+
+      <!-- Voucher 4 -->
+      <div class="voucher-card p-6 flex flex-col justify-between">
+        <div class="voucher-notch-left"></div>
+        <div class="voucher-notch-right"></div>
+        <div class="space-y-3">
+          <span class="text-2xl">🫂</span>
+          <h4 class="font-serif font-bold text-slate-800 text-lg">Emergency Mood Uplift</h4>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Instant delivery of hilarious memes, comforting words, and positive sibling energy.
+          </p>
+        </div>
+        <div class="mt-6 pt-3 border-t border-dashed border-pink-200">
+          <button onclick="claimVoucher(this, 'Emergency Mood Uplift')" class="w-full py-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs font-semibold transition-colors">
+            Claim Coupon ✨
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       10. FINAL SECTION (DREAMY NIGHT SKY & FLOATING LANTERNS)
+       ========================================================================= -->
+  <section id="final-section" class="night-sky-bg text-white pt-28 pb-20 px-4 relative min-h-[90vh] flex flex-col justify-between">
+    <!-- Starry background stars generated via script & moon -->
+    <div id="stars-container" class="absolute inset-0 pointer-events-none"></div>
+
+    <!-- Glowing Crescent Moon -->
+    <div class="absolute top-12 right-12 sm:right-24 w-28 h-28 pointer-events-none opacity-85">
+      <div class="w-24 h-24 rounded-full shadow-[0_0_50px_rgba(254,240,138,0.5)] border-t-8 border-l-8 border-amber-100 rotate-45"></div>
+    </div>
+
+    <!-- Floating Diya Lanterns -->
+    <div id="lanterns-container" class="absolute inset-0 pointer-events-none"></div>
+
+    <!-- Heartfelt Final Quotes -->
+    <div class="max-w-3xl mx-auto text-center relative z-10 my-auto space-y-8">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-amber-200 text-xs font-semibold uppercase tracking-widest">
+        🌙 An Eternal Sibling Connection 🌙
+      </div>
+
+      <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-relaxed text-amber-100 italic">
+        “Distance may separate us, time may test us, but nothing can break a bond made by the heart.”
+      </h2>
+
+      <div class="space-y-3">
+        <h3 class="font-serif-header text-3xl sm:text-5xl font-bold bg-gradient-to-r from-pink-300 via-rose-300 to-amber-200 bg-clip-text text-transparent">
+          Happy Raksha Bandhan, <span class="friend-name-display">Riya</span>! 💖
+        </h3>
+        <p class="text-base sm:text-lg text-slate-300 font-light max-w-xl mx-auto">
+          “You came into my life as a friend and became the sister my heart chose.”
+        </p>
+      </div>
+
+      <!-- Virtual Hug Button -->
+      <div class="pt-6">
+        <button id="virtual-hug-btn" onclick="sendVirtualHug()" class="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-bold text-lg shadow-2xl shadow-pink-500/40 hover:scale-105 active:scale-95 transition-all">
+          <span class="text-2xl group-hover:scale-125 transition-transform">🤗</span>
+          <span>Send a Virtual Hug</span>
+          <i data-lucide="heart" class="w-5 h-5 text-pink-200 group-hover:fill-pink-200 transition-all"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Personalized Footer -->
+    <footer class="text-center relative z-10 pt-16 border-t border-white/10 mt-16">
+      <p class="text-sm text-slate-400 font-medium">
+        Made with endless care by <span class="text-rose-400 font-semibold your-name-display">Aman</span>, especially for <span class="text-pink-300 font-semibold friend-name-display">Riya</span> 💖
+      </p>
+      <p class="text-xs text-slate-500 mt-2">
+        Raksha Bandhan 2026 • A Bond Beyond Words • Happy Rakhi
+      </p>
+    </footer>
+  </section>
+
+  <!-- =========================================================================
+       MODALS & LIGHTBOXES
+       ========================================================================= -->
+
+  <!-- 1. FULLSCREEN PHOTO LIGHTBOX -->
+  <div id="lightbox-modal" class="fixed inset-0 z-[10000] lightbox-modal hidden items-center justify-center p-4">
+    <button onclick="closeLightbox()" class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xl transition-colors z-20">
+      ✕
+    </button>
+    <button onclick="prevLightbox()" class="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-20">
+      ‹
+    </button>
+    <button onclick="nextLightbox()" class="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-20">
+      ›
+    </button>
+
+    <div class="max-w-4xl w-full max-h-[85vh] flex flex-col items-center">
+      <div class="relative bg-white p-3 sm:p-4 rounded-2xl shadow-2xl max-w-full">
+        <img id="lightbox-img" src="" alt="Memory preview" class="max-h-[65vh] w-auto object-contain rounded-lg" />
+        <div class="mt-4 text-center">
+          <p id="lightbox-caption" class="font-handwriting text-2xl sm:text-3xl text-slate-800 font-bold"></p>
+          <div class="flex items-center justify-center gap-4 mt-2 text-xs text-slate-400">
+            <span id="lightbox-counter">1 / 8</span>
+            <button onclick="triggerLightboxHeart()" class="flex items-center gap-1 text-rose-500 font-semibold hover:scale-110 transition-transform">
+              <span>❤️ Love this memory</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CELEBRATION SURPRISE CERTIFICATE MODAL -->
+  <div id="surprise-modal" class="fixed inset-0 z-[10000] lightbox-modal hidden items-center justify-center p-4">
+    <div class="glass-card-gold max-w-xl w-full p-8 sm:p-10 rounded-3xl relative text-center border-4 border-amber-300 shadow-2xl space-y-6">
+      <button onclick="closeSurpriseModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold">
+        ✕
+      </button>
+
+      <!-- Animated 3D Rakhi -->
+      <div class="w-32 h-32 mx-auto relative flex items-center justify-center">
+        <div class="absolute inset-0 bg-amber-300/40 rounded-full blur-xl animate-pulse"></div>
+        <img src="assets/images/rakhi_golden_ornate.jpg" alt="Animated Rakhi" class="w-28 h-28 object-contain rounded-full shadow-lg border-2 border-amber-400 animate-float" />
+      </div>
+
+      <div class="space-y-3">
+        <span class="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">
+          📜 Official Sisterhood Certificate 📜
+        </span>
+        <h3 class="font-serif-header text-2xl sm:text-3xl font-bold text-slate-800">
+          Congratulations, <span class="friend-name-display">Riya</span>! 🥹💖
+        </h3>
+        <p class="text-base sm:text-lg text-slate-700 font-medium leading-relaxed">
+          “You are officially my favourite best friend, permanent supporter, secret keeper, and sister for life!”
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 text-white font-bold text-base shadow-md">
+        No Return • No Exchange • Lifetime Bond ♾️
+      </div>
+
+      <div class="flex items-center justify-center gap-3 pt-2">
+        <button onclick="downloadCelebrationCard()" class="px-6 py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-2">
+          <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Lifetime Bond Accepted
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. PERSONALIZATION DRAWER -->
+  <div id="personalizer-drawer" class="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl z-[10001] translate-x-full transition-transform duration-300 p-6 flex flex-col justify-between">
+    <div class="space-y-6">
+      <div class="flex items-center justify-between border-b pb-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">✨</span>
+          <h3 class="font-serif font-bold text-lg text-slate-800">Personalize Names</h3>
+        </div>
+        <button onclick="closePersonalizer()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center">
+          ✕
+        </button>
+      </div>
+
+      <div class="space-y-4 text-sm">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+            Friend's Name (Her Name)
+          </label>
+          <input type="text" id="input-friend-name" value="Riya" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 font-medium" placeholder="Enter her name..." />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+            Your Name
+          </label>
+          <input type="text" id="input-your-name" value="Aman" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 font-medium" placeholder="Enter your name..." />
+        </div>
+
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Updating names automatically refreshes the hero titles, letter salutation, signature, VIP pass, certificate, and footer!
+        </p>
+      </div>
+    </div>
+
+    <div class="pt-6 border-t space-y-3">
+      <button onclick="savePersonalization()" class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all">
+        Save & Apply Everywhere ✨
+      </button>
+      <button onclick="resetPersonalization()" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-medium transition-colors">
+        Reset to Defaults
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-[10002] flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- App Script -->
+  <script src="app.js"></script>
+</body>
+</html>
